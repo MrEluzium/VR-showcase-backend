@@ -41,3 +41,6 @@ class SessionsManager:
 
             return True
         return False
+
+    def get_session_by_id(self, id: int) -> Session | None:
+        return self.__instances.get(id)
