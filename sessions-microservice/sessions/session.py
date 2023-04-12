@@ -2,7 +2,16 @@ from subprocess import Popen, PIPE, STDOUT
 from random import randint
 from enum import Enum
 
-SERVER_RUN_COMMAND = "java -Xmx1024M -Xms1024M -jar /Users/elzzz/Documents/server/server.jar nogui"
+from psutil import Process
+
+SERVER_RUN_COMMAND = "VRExpPluginExampleServer.exe -log -port"
+
+
+def process_kill(proc_pid: int):
+    process = Process(proc_pid)
+    for proc in process.children(recursive=True):
+        proc.kill()
+    process.kill()
 
 
 class SessionStatus(Enum):
@@ -13,13 +22,13 @@ class SessionStatus(Enum):
 
 class Session:
     def __init__(self):
-        self.id = randint(100000, 999999)
+        self.id = randint(10000, 99999)
         self.status = SessionStatus.pending
         self.__server_process: Popen = None
 
     def start_instance(self, cwd: str) -> Popen:
         process = Popen(
-            SERVER_RUN_COMMAND,
+            f"{SERVER_RUN_COMMAND}{self.id}",
             shell=True,
             cwd=cwd,
             stdout=PIPE,
@@ -31,5 +40,5 @@ class Session:
         return process
 
     def kill(self):
-        self.__server_process.kill()
+        process_kill(self.__server_process.pid)
         self.status = SessionStatus.killed

@@ -3,9 +3,7 @@ import shutil
 
 from sessions.session import Session
 
-SERVER_DIRECTORY = "../server"
-INSTANCES_DIRECTORY = "../instances"
-SERVER_RUN_COMMAND = "java -Xmx1024M -Xms1024M -jar server/server.jar nogui"  # temporary testing on mc server
+SERVER_DIRECTORY = "server"
 
 
 class SessionsManager:
@@ -24,11 +22,7 @@ class SessionsManager:
             del session
 
         self.__instances[session.id] = session
-
-        instance_path = Path(f"{INSTANCES_DIRECTORY}/{session.id}")
-        shutil.copytree(SERVER_DIRECTORY, instance_path)
-
-        session.start_instance(instance_path)
+        session.start_instance(SERVER_DIRECTORY)
 
         return session.id
 
@@ -37,10 +31,12 @@ class SessionsManager:
             session = self.__instances.pop(id)
             session.kill()
 
-            shutil.rmtree(f"{INSTANCES_DIRECTORY}/{session.id}")
-
             return True
         return False
 
     def get_session_by_id(self, id: int) -> Session | None:
         return self.__instances.get(id)
+
+    def sessions_list(self):
+        print(list(self.__instances.keys()))
+        return list(self.__instances.keys())

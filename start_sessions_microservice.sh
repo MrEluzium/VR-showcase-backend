@@ -1,3 +1,3 @@
 source venv/bin/activate
-cd sessions_microservice
+cd sessions-microservice
 uvicorn main:app
