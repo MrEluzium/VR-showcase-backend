@@ -39,6 +39,6 @@ class Session:
         self.status = SessionStatus.running
         return process
 
-    def kill(self):
+    def kill(self) -> list[int]:
         process_kill(self.__server_process.pid)
         self.status = SessionStatus.killed

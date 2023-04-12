@@ -18,6 +18,7 @@ async def stop_session(id: int):
         raise HTTPException(status_code=404, detail="Item not found")
     return
 
+
 @app.get("/session/all")
 async def get_sessions_list():
     return session_manager.sessions_list()

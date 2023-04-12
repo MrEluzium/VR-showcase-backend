@@ -30,7 +30,6 @@ class SessionsManager:
         if id in self.__instances.keys():
             session = self.__instances.pop(id)
             session.kill()
-
             return True
         return False
 
@@ -38,5 +37,4 @@ class SessionsManager:
         return self.__instances.get(id)
 
     def sessions_list(self):
-        print(list(self.__instances.keys()))
         return list(self.__instances.keys())
