@@ -4,3 +4,4 @@ __pycache__
 .idea
 server
 instances
+config.yaml
