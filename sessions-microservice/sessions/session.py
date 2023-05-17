@@ -22,7 +22,7 @@ class SessionStatus(Enum):
 
 class Session:
     def __init__(self):
-        self.id = randint(10000, 99999)
+        self.id = randint(70000, 99999)
         self.status = SessionStatus.pending
         self.__server_process: Popen = None
 
